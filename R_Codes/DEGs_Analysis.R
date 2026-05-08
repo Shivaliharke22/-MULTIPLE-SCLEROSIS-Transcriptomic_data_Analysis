@@ -105,3 +105,17 @@ down_genes <- subset(result_clean, padj < padj_cutoff & log2FoldChange < -log2fc
 down_genes <- subset(result_clean, regulation == "Down") #63
 
 combined_df_up <- rbind(up_genes, down_genes)
+
+######VOLCANO PLOT############
+
+# VOLCANO Plots
+ggplot(result_clean, aes(x = log2FoldChange, y = -log10(padj), color = regulation)) +
+  geom_point(alpha = 0.6, size = 1.5) +
+  scale_color_manual(values = c("blue", "grey", "red")) +
+  geom_vline(xintercept = c(-log2fc_cutoff, log2fc_cutoff), linetype = "dashed", color = "black") +
+  geom_hline(yintercept = -log10(padj_cutoff), linetype = "dashed", color = "black") +
+  labs(title = "DEG_RESULT",
+       x = "log2 Fold Change",
+       y = "-log10 Adjusted p-value") +
+  theme_minimal()
+
